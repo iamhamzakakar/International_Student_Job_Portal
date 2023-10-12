@@ -1,0 +1,99 @@
+/* Reset some default styles */
+body, h1, h2, h3, p, ul, li {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Body background */
+body {
+    background-color: #E8E8EA;
+}
+
+/* Navbar styles */
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 5%;
+    background: linear-gradient(to right, #4A4A5E, #D1D1D6);
+}
+
+.nav-links {
+    list-style-type: none;
+    display: flex;
+    gap: 1rem;
+}
+
+.nav-links li {
+    cursor: pointer;
+}
+
+button {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    background-color: #D1D1D6;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+
+
+button:hover {
+    background-color:#1D1D36;
+    color: #D1D1D6;
+}
+
+/* Hero section styles */
+.hero {
+    text-align: center;
+    padding: 5rem 0;
+    background-color: #1D1D36;
+    color: #E8E8EA;
+}
+
+/* About us section styles */
+.about-us {
+    text-align: center;
+    padding: 3rem 5%;
+    background-color: #D1D1D6;
+    color: #1D1D36;
+}
+
+/* Recent jobs section styles */
+.recent-jobs {
+    padding: 3rem 5%;
+    background-color: #E8E8EA;
+    color: #1D1D36;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.jobs-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    margin-top: 2rem;
+    width: 60%; /* Adjust this value if you want the cards to be wider or narrower */
+}
+
+.job-card {
+    border: 1px solid #D1D1D6;
+    padding: 1rem;
+    border-radius: 5px;
+    background-color: #D1D1D6;
+    transition: transform 0.3s;
+}
+
+.job-card:hover {
+    transform: translateY(-10px);
+}
+/* Footer styles */
+footer {
+    text-align: center;
+    padding: 1rem 0;
+    background-color: #1D1D36;
+    color: #E8E8EA;
+}
