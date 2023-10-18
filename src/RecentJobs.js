@@ -1,5 +1,4 @@
 import React from 'react';
-
 function RecentJobs() {
     return (
         <section className="recent-jobs">
