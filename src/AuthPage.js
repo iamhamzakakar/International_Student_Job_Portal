@@ -1,11 +1,22 @@
-// AuthPage.js
 import React from 'react';
+import SignUp from './SignUp';
+import SignIn from './SignIn';
 
 function AuthPage() {
     return (
         <div className="auth-page">
-            <h2>Sign Up / Sign In</h2>
-            {/* You can add your sign up and sign in forms here */}
+          
+            <div className="auth-links">
+                
+            </div>
+            <div className="auth-forms">
+                <div className="auth-form">
+                    <SignUp />
+                </div>
+                <div className="auth-form">
+                    <SignIn />
+                </div>
+            </div>
         </div>
     );
 }

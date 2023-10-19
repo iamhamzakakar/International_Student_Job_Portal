@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DOM Example</title></head>
+<body>
+    <h1 id="myHeading">Hello, World!</h1>
+    <button onclick="changeText()">Change Text</button>
+
+    <script>
+        function changeText() {
+            // Access the DOM element with id "myHeading"
+            const heading = document.getElementById("myHeading");
+
+            // Modify the text content of the element
+            heading.textContent = "New Text!";
+        }
+    </script>
+</body>
+</html>

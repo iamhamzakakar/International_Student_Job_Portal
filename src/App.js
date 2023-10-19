@@ -1,28 +1,51 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'; // Updated imports
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Navbar from './Navbar';
 import HeroSection from './HeroSection';
 import AboutUs from './AboutUs';
 import RecentJobs from './RecentJobs';
 import Footer from './Footer';
 import AuthPage from './AuthPage';
-import './styles.css';
+import SignIn from './SignIn';
+import SignUp from './SignUp';
+import { CssBaseline, Paper, ThemeProvider, createTheme } from '@mui/material';
+
+const theme = createTheme({
+    palette: {
+        primary: {
+            main: '#1976d2',
+        },
+        secondary: {
+            main: '#ffc107',
+        },
+        background: {
+            default: '#f5f5f5',
+        },
+    },
+});
 
 function App() {
     return (
-        <Router>
-            <div className="App">
-                <Navbar />
-                <Routes>
-                    <Route path="/" element={<HeroSection />}>
-                        <Route index element={<AboutUs />} />
-                        <Route path="recent-jobs" element={<RecentJobs />} />
-                    </Route>
-                    <Route path="auth" element={<AuthPage />} />
-                </Routes>
-                <Footer />
-            </div>
-        </Router>
+        <ThemeProvider theme={theme}>
+            <Router>
+                <CssBaseline />
+                <div style={{ backgroundColor: theme.palette.background.default, minHeight: '100vh' }}>
+                    <Navbar />
+                    <Paper elevation={3} style={{ backgroundColor: theme.palette.primary.main, color: theme.palette.common.white }}>
+                        <Routes>
+                            <Route path="/" element={<div>
+                                <HeroSection />
+                                <AboutUs />
+                                <RecentJobs />
+                            </div>} />
+                            <Route path="auth" element={<SignIn />} />
+                            <Route path="signup" element={<SignUp />} />
+                        </Routes>
+                    </Paper>
+                    <Footer />
+                </div>
+            </Router>
+        </ThemeProvider>
     );
 }
 
