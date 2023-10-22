@@ -8,6 +8,7 @@ import Footer from './Footer';
 import AuthPage from './AuthPage';
 import SignIn from './SignIn';
 import SignUp from './SignUp';
+import Events from './Events';
 import { CssBaseline, Paper, ThemeProvider, createTheme } from '@mui/material';
 
 const theme = createTheme({
@@ -40,6 +41,7 @@ function App() {
                             </div>} />
                             <Route path="auth" element={<SignIn />} />
                             <Route path="signup" element={<SignUp />} />
+                            <Route path="/Events" element={<Events />} />
                         </Routes>
                     </Paper>
                     <Footer />

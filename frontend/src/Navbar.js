@@ -15,7 +15,7 @@ function Navbar() {
                     Job Portal
                 </Typography>
                 <Button color="inherit" component={RouterLink} to="/">Home</Button>
-                <Button color="inherit" component={RouterLink} to="/">Events</Button>
+                <Button color="inherit" component={RouterLink} to="./Events">Events</Button>
                 <Button color="inherit" component={RouterLink} to="/">Contact Us</Button>
                 <Button color="inherit" component={RouterLink} to="/open-jobs">Open Jobs</Button>
                 <IconButton color="inherit">
