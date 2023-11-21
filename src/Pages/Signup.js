@@ -2,13 +2,18 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { Avatar, Button, FormControl, FormControlLabel, FormLabel, Grid, InputLabel, MenuItem, Paper, Radio, RadioGroup, Select, TextField, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import 'react-toastify/dist/ReactToastify.css';
+import {toast} from "react-toastify";
+
 
 const SignUp = () => {
+    const navigate = useNavigate();
     const paperStyle = { padding: 40, height: 'auto', width: 400, margin: "0px auto", backgroundColor: '#F8FFF9' };
     const avatarStyle = { backgroundColor: '#66b9bf' };
     const Fieldkstyle = { margin:'8px 0px'}
     const sorc = { margin: '8px 0px' };
-    const [value, setValue] = useState('Student');
+    const [value, setValue] = useState('student');
     const [password, setPassword] = useState('');
     const [passwordError, setPasswordError] = useState('');
 
@@ -45,30 +50,39 @@ const SignUp = () => {
         event.preventDefault();
 
         const userData = {
-            userType: value,
+            role: value,
             name: event.target.Name.value,
-            email: value === "Student" ? event.target.Email.value : event.target.WorkEmail.value,
+            email: value === "student" ? event.target.Email.value : event.target.WorkEmail.value,
             university: fieldOfStudy,
             website: event.target.Website?.value,
-            contactNumber: event.target.ContactNumber?.value,
+            phone: event.target.ContactNumber?.value,
             address: event.target.Address?.value,
             password: password
         };
 
-        const response = await fetch('http://localhost:5001/api/auth/signup', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(userData)
-        });
+        try {
+            const response = await fetch('http://127.0.0.1:8080/api/auth/signup', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams(userData),
+            });
 
-        const data = await response.json();
-        if (data.message) {
-            alert(data.message); // Show a success message
-            // Optionally, redirect to login page
-        } else {
-            alert(data.error); // Show an error message
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            if (data.message) {
+                toast.info(data.message || 'An error occurred');
+                navigate("/");
+            } else {
+                toast.error(data.message || 'An error occurred');
+            }
+        } catch (error) {
+            console.error('Error during signup:', error.message);
+
         }
     };
 
@@ -90,14 +104,14 @@ const SignUp = () => {
                                 value={value}
                                 onChange={handleChange}
                             >
-                                <FormControlLabel value="Student" control={<Radio />} label="Student" />
-                                <FormControlLabel value="Company" control={<Radio />} label="Company" />
+                                <FormControlLabel value="student" control={<Radio />} label="Student" />
+                                <FormControlLabel value="company" control={<Radio />} label="Company" />
                             </RadioGroup>
                         </FormControl>
                     </Grid>
 
                     {/* Conditional Rendering based on Radio Button */}
-                    {value === "Student" && (
+                    {value === "student" && (
                         <>
                             <TextField name="Name" id="Name" label="Name" variant="filled" style={Fieldkstyle} fullWidth required />
                             <TextField name="Email" id="Email" label="Email" variant="filled" style={Fieldkstyle} fullWidth required />
@@ -118,7 +132,7 @@ const SignUp = () => {
                         </>
                     )}
 
-                    {value === "Company" && (
+                    {value === "company" && (
                         <>
                             <TextField name="Name" id="Name" label="Name" variant="filled" style={Fieldkstyle} fullWidth required />
                             <TextField name="WorkEmail" id="WorkEmail" label="Work Email" variant="filled" style={Fieldkstyle} fullWidth required />

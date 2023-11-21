@@ -24,65 +24,35 @@ verifyToken = (req, res, next) => {
         });
 };
 
-isStudent = (req, res, next) => {
-    User.findById(req.userId).exec((err, user) => {
-        if (err) {
-            res.status(500).send({ message: err });
-            return;
-        }
-
-        Role.find(
-            {
-                _id: { $in: user.roles }
-            },
-            (err, roles) => {
-                if (err) {
-                    res.status(500).send({ message: err });
-                    return;
-                }
-
-                for (let i = 0; i < roles.length; i++) {
-                    if (roles[i].name === "user") {
-                        next();
-                        return;
-                    }
-                }
-
-                res.status(403).send({ message: "Require Student Role!" });
-                return;
+const isStudent = (req, res, next) => {
+    User.findById(req.userId)
+        .then(user => {
+            if (user && user.role === 'student') {
+                // User is a student
+                return next(); // continue to the next middleware or route handler
+            } else {
+                // User is not a student
+                res.status(403).send({ message: 'Access forbidden. User is not a student.' });
             }
-        );
-    });
+        })
+        .catch(err => {
+            res.status(500).send({ message: err.message || 'Internal Server Error' });
+        });
 };
 
-isCompany = (req, res, next) => {
-    User.findById(req.userId).exec((err, user) => {
+
+const isCompany = (req, res, next) => {
+    User.findById(req.userId).then((err, user) => {
         if (err) {
             res.status(500).send({ message: err });
             return;
         }
 
-        Role.find(
-            {
-                _id: { $in: user.roles }
-            },
-            (err, roles) => {
-                if (err) {
-                    res.status(500).send({ message: err });
-                    return;
-                }
-
-                for (let i = 0; i < roles.length; i++) {
-                    if (roles[i].name === "company") {
-                        next();
-                        return;
-                    }
-                }
-
-                res.status(403).send({ message: "Require Company Role!" });
-                return;
-            }
-        );
+        if (user && user.role === 'company') {
+            return true;
+        } else {
+            return false;
+        }
     });
 };
 

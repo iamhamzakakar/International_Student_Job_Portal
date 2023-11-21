@@ -25,7 +25,6 @@ exports.signup = async (req, res) => {
             const savedCompany = await company.save();
 
             if (!savedCompany) {
-                console.error("Failed to save company details.");
                 return res.status(500).send({ message: "Failed to save company details." });
             }
             return res.send({
@@ -40,11 +39,9 @@ exports.signup = async (req, res) => {
                 university: req.body.university,
                 role: req.body.role,
             });
-
             const savedUser = await user.save();
 
             if (!savedUser) {
-                console.error("Failed to save user details.");
                 return res.status(500).send({ message: "Failed to save user details." });
             }
 
@@ -54,7 +51,7 @@ exports.signup = async (req, res) => {
             });
         } else {
             console.error("Invalid role specified!");
-            return res.status(400).send({ message: "Invalid role specified!" });
+            return res.status(400).send({ message: "Invalid role specifieds!" });
         }
     } catch (err) {
         console.error("Error during signup:", err);
@@ -94,10 +91,11 @@ const authenticateUser = async (model, email, password, role) => {
 
 exports.signin = async (req, res) => {
     try {
+
         const role = req.body.role;
 
         if (role !== 'company' && role !== 'student') {
-            return res.status(400).send({ message: "Invalid role specified!" });
+            return res.status(400).send({ message: "Login as Student or Company" });
         }
 
         let userData;
@@ -105,12 +103,13 @@ exports.signin = async (req, res) => {
         if (role === 'company') {
             userData = await authenticateUser(Company, req.body.email, req.body.password, 'company');
             if (!userData) {
-                return res.status(404).send({ message: "Company Not found." });
+                return res.status(404).send({ message: "Register as a Company." });
             }
         } else {
             userData = await authenticateUser(User, req.body.email, req.body.password, 'student');
+            console.log(userData)
             if (!userData) {
-                return res.status(404).send({ message: "User Not found." });
+                return res.status(404).send({ message: "Register as a User" });
             }
         }
 

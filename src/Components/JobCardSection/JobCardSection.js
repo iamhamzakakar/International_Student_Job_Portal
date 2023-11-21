@@ -18,7 +18,11 @@ const JobCardSection = ({ jobs }) => {
   };
 
   return (
-    <Box>
+    <Box sx={{
+      backgroundColor: "background.paper",
+      height: "40vh",
+      paddingTop: "8px"
+    }}>
       <Grid container justifyContent="center" spacing={2}
       sx={{ maxWidth: 1000, margin: 'auto', position: 'relative', padding: '0 8px' }}>
         <Grid item xs={12}>
