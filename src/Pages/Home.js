@@ -4,6 +4,7 @@ import HeroBanner from '../Components/HeroSection'
 import WhoAreWe from '../Components/WhoAreWe'
 import JobCardSection from '../Components/JobCardSection/JobCardSection'
 import jobData from '../JobData'
+import Footer from '../Components/Footer'
 
 const Home = () => {
   return (
@@ -12,7 +13,7 @@ const Home = () => {
       <HeroBanner/>
       <WhoAreWe/>
       <JobCardSection jobs={jobData} />
-      <h1>Home</h1>
+      <Footer/>
     </div>
   )
 }

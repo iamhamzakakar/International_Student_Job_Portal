@@ -13,7 +13,7 @@ const WhoAreWe = () => {
 
     const blurStyle = {
         backdropFilter: 'blur(10px)', // Apply blur effect
-        backgroundColor: 'rgba(255, 255, 255, 0.7)', // Semi-transparent background
+        backgroundColor: 'rgba(212,234,247,0.7)', // Semi-transparent background
         padding: '20px',
         borderRadius: '15px',
         border: '1px solid #fff', // Optional: add border

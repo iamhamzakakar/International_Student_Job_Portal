@@ -8,6 +8,7 @@ import JobCard from '../Components/Job/JobCard';
 import NewJobModal from '../Components/Job/NewJobModal';
 import jobsData from '../JobData.js';
 import NavBar from '../Components/NavBar/NavBar';
+import Footer from '../Components/Footer/index.js';
 
 
 const JobList = () => {
@@ -24,6 +25,7 @@ const JobList = () => {
             {jobsData.map(job =><JobCard key={job.id} {...job}/>)}
         </Grid>
       </Grid>
+      <Footer/>
     </ThemeProvider>
   )
 }

@@ -21,8 +21,8 @@ const HeroBanner = () => {
             <Typography variant="h1">
                 Your Job Search Ends Right Here
             </Typography>
-            <Button variant="contained" color="primary" style={{ marginTop: '20px' }}>
-                Get Started
+            <Button href='/JobList' variant="contained" color="primary" style={{ marginTop: '20px' }}>
+                Job Listing
             </Button>
         </Box>
     );

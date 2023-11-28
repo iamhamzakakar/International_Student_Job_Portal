@@ -1,30 +1,41 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { ThemeProvider} from '@mui/material';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
+import { AppBar, Toolbar, Typography, Button, IconButton, Menu, MenuItem } from '@mui/material';
+import AccountCircle from '@mui/icons-material/AccountCircle';
 import theme from '../../theme/theme';
-import CssBaseline from '@mui/material/CssBaseline';
-
+import { ThemeProvider, CssBaseline } from '@mui/material';
 
 const NavBar = () => {
-    
+    const [anchorEl, setAnchorEl] = useState(null);
+
+    const handleMenu = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
     return (
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <AppBar position="sticky" style={{ backgroundColor: 'secondary.main' }}>
-            <Toolbar disableElevation>
-                <Typography variant="h6" style={{ flexGrow: 1, color: 'background.default' }}>
-                    StudyFinJourney
-                </Typography>
-                <Button color="inherit" component={NavLink} to="/home" exact style={({ isActive }) => ({
-                    color: isActive ? '#1d1c1c' : 'inherit',
-                    backgroundColor: isActive ? '#71c4ef' : 'transparent',
-                  })}>
-                    Home
-                </Button>
+        <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <AppBar position="sticky" style={{ backgroundColor: 'secondary.main' }} disableElevation
+            sx={{
+                backdropFilter: 'blur(10px)',
+                backgroundColor: 'rgba(212, 234, 247, 0.4)',
+                padding: '4px',
+            }}>
+                <Toolbar disableElevation>
+                    <Typography variant="h6" style={{ flexGrow: 1, color: 'background.default' }}>
+                        StudyFinJourney
+                    </Typography>
+                    {/* Other navigation buttons */}
+                    <Button color="inherit" component={NavLink} to="/home" exact style={({ isActive }) => ({
+                        color: isActive ? '#1d1c1c' : 'inherit',
+                        backgroundColor: isActive ? '#71c4ef' : 'transparent',
+                    })}>
+                        Home
+                    </Button>
                 <Button color="inherit" component={NavLink} to="/JobList" 
                     style={({isActive})=>({color: isActive ? '#1d1c1c' : 'inherit',
                     backgroundColor: isActive ? '#71c4ef' : 'transparent',})}>
@@ -38,12 +49,38 @@ const NavBar = () => {
                 <Button color="inherit" component={NavLink} to="/Contact" activeClassName="active">
                     Contact
                 </Button>
-                <Button color="inherit" component={NavLink} to="/" activeClassName="active">
-                    Sign in / Sign Up
-                </Button>
-            </Toolbar>
-        </AppBar>
-      </ThemeProvider>
+                <IconButton
+                        size="large"
+                        edge="end"
+                        aria-label="account of current user"
+                        aria-controls="menu-appbar"
+                        aria-haspopup="true"
+                        onClick={handleMenu}
+                        color="inherit"
+                    >
+                        <AccountCircle />
+                    </IconButton>
+                    <Menu
+                        id="menu-appbar"
+                        anchorEl={anchorEl}
+                        anchorOrigin={{
+                            vertical: 'top',
+                            horizontal: 'right',
+                        }}
+                        keepMounted
+                        transformOrigin={{
+                            vertical: 'top',
+                            horizontal: 'right',
+                        }}
+                        open={Boolean(anchorEl)}
+                        onClose={handleClose}
+                    >
+                        <MenuItem onClick={handleClose} component={NavLink} to="/" activeClassName="active" >Profile</MenuItem>
+                        <MenuItem onClick={handleClose}>Logout</MenuItem>
+                    </Menu>
+                </Toolbar>
+            </AppBar>
+        </ThemeProvider>
     );
 };
 

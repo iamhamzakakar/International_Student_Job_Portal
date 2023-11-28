@@ -36,10 +36,10 @@ const JobCardSection = ({ jobs }) => {
             {jobs[currentIndex] && <JobCard {...jobs[currentIndex]} />}
           </Box>
           <Box position="absolute" bottom={-40} right={40} display="flex" mt={2}> {/* Lowered buttons position */}
-            <Button onClick={handlePrev} disabled={currentIndex === 0}>
+            <Button color='secondary' onClick={handlePrev} disabled={currentIndex === 0}>
               <ArrowBackIosIcon />
             </Button>
-            <Button onClick={handleNext} disabled={currentIndex === jobs.length - 1}>
+            <Button color='secondary' onClick={handleNext} disabled={currentIndex === jobs.length - 1}>
               <ArrowForwardIosIcon />
             </Button>
           </Box>

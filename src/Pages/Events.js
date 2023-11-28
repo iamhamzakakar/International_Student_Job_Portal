@@ -1,119 +1,84 @@
 import React from 'react';
-import { Container, Card, CardContent, Typography, CardHeader, Divider, Button, Grid } from '@mui/material';
-import { styled } from '@mui/material/styles';
-import backgroundImage from '../Utils/event.jpg';
-
-const eventsData = [
-    {
-        id: 1,
-        name: "Workshop on Digital Innovation",
-        date: "25th October 2023",
-        time: "2:00 PM",
-        location: "LUT Lahti"
-      },
-      {
-        id: 2,
-        name: "Sustainability in Business Seminar",
-        date: "28th October 2023",
-        time: "10:00 AM",
-        location: "LUT Lappeenranta"
-      },
-      {
-        id: 3,
-        name: "Nokia's Future in 5G Technology",
-        date: "30th October 2023",
-        time: "11:00 AM",
-        location: "LUT Lahti"
-      },
-      {
-        id: 4,
-        name: "Supercell Gaming Convention",
-        date: "5th November 2023",
-        time: "3:00 PM",
-        location: "LUT Lappeenranta"
-      },
-      {
-        id: 5,
-        name: "Rovio Entertainment's Vision 2024",
-        date: "8th November 2023",
-        time: "1:00 PM",
-        location: "LUT Lahti"
-      },
-      {
-        id: 6,
-        name: "Smart Tampere: A Digital City Initiative",
-        date: "10th November 2023",
-        time: "4:00 PM",
-        location: "LUT Lappeenranta"
-      },
-      {
-        id: 7,
-        name: "KONE's Elevator Innovations",
-        date: "15th November 2023",
-        time: "10:00 AM",
-        location: "LUT Lahti"
-      },
-      {
-        id: 8,
-        name: "Wärtsilä: Navigating the Future of Energy",
-        date: "18th November 2023",
-        time: "12:00 PM",
-        location: "LUT Lappeenranta"
-      }
-    ];    
-    const StyledCard = styled(Card)(({ theme }) => ({
-    height: 250,
-    transition: '0.3s',
-    boxShadow: '0 8px 40px -12px rgba(0,0,0,0.3)',
-    '&:hover': {
-      boxShadow: '0 16px 70px -12.125px rgba(0,0,0,0.3)',
-      transform: 'scale(1.03)'
-    },
-    backgroundImage: `url(${backgroundImage})`,
-    backgroundSize: 'cover',
-    backgroundPosition: 'center'
-}));
-
-const JoinButton = styled(Button)(({ theme }) => ({
-    marginTop: 10,
-    backgroundColor: theme.palette.secondary.main,
-    color: theme.palette.common.white,
-    '&:hover': {
-      backgroundColor: theme.palette.secondary.dark
-    }
-}));
-
-const EventsContainer = styled(Container)(({ theme }) => ({
-    backgroundImage: `url(${backgroundImage})`,
-    backgroundSize: 'cover',
-    backgroundRepeat: 'no-repeat',
-    backgroundPosition: 'center center',
-}));
+import { Typography, Container, Grid } from '@mui/material';
+import EventCard from '../Components/EventCard/index'; // This will be your custom card component
+import NavBar from '../Components/NavBar/NavBar';
+import Footer from '../Components/Footer';
 
 const Events = () => {
-  return (
-    <EventsContainer maxWidth="lg" className="events-container">
-      <Typography variant="h3" gutterBottom align="center" style={{ marginBottom: 30, color: '#2E3B55' }}>
-        Upcoming Events
-      </Typography>
-      <Divider />
-      <Grid container spacing={3}>
-        {eventsData.map(event => (
-          <Grid item xs={12} sm={4} key={event.id}>
-            <StyledCard className="event-card">
-              <CardHeader className="event-card-content" title={event.name} subheader={event.location} />
-              <CardContent className="event-card-content">
-                <Typography variant="h6">
-                  {event.date} at {event.time}
-                </Typography>
-                <JoinButton className="join-button" variant="contained">Join Event</JoinButton>
-              </CardContent>
-            </StyledCard>
-          </Grid>
-        ))}
-      </Grid>
-    </EventsContainer>
-  );
-}
+    const events = [
+        {
+            id: 1,
+            title: "Workshop on Digital Innovation",
+            imageUrl: "https://images.pexels.com/photos/2774556/pexels-photo-2774556.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+            description: 'LUT Lahti'
+          },
+          {
+            id: 2,
+            title: "Sustainability in Business Seminar",
+            imageUrl: "https://images.pexels.com/photos/3321793/pexels-photo-3321793.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+            description: 'LUT Lahti'
+          },
+          {
+            id: 3,
+            title: "Nokia's Future in 5G Technology",
+            imageUrl: "https://images.pexels.com/photos/6150527/pexels-photo-6150527.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+            description: 'LUT Lahti'
+          },
+          {
+            id: 4,
+            title: "Supercell Gaming Convention",
+            imageUrl: "https://images.pexels.com/photos/2608516/pexels-photo-2608516.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+            description: 'LUT Lahti'
+          },
+          {
+            id: 5,
+            title: "Rovio Entertainment's Vision 2024",
+            imageUrl: "https://images.pexels.com/photos/3719037/pexels-photo-3719037.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+            description: 'LUT Lahti'
+          },
+          {
+            id: 6,
+            title: "Smart Tampere: A Digital City Initiative",
+            imageUrl: "https://images.pexels.com/photos/1015568/pexels-photo-1015568.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+            description: 'LUT Lahti'
+          },
+          {
+            id: 7,
+            title: "KONE's Elevator Innovations",
+            imageUrl: "https://images.pexels.com/photos/5257759/pexels-photo-5257759.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+            description: 'LUT Lahti'
+          },
+          {
+            id: 8,
+            title: "Wärtsilä: Navigating the Future of Energy",
+            imageUrl: "https://images.pexels.com/photos/7688164/pexels-photo-7688164.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+            description: 'LUT Lahti'
+          }
+        
+    ];
+
+    return (
+      <>
+        <NavBar/>
+        <Container>
+            <Typography variant="h1" align="center" gutterBottom>
+                Upcoming Events
+            </Typography>
+            <Typography variant="body1" align="center" paragraph>
+                Check out the latest events happening around you!
+            </Typography>
+            <Grid container spacing={4}>
+                {events.map(event => (
+                    <Grid item key={event.id} xs={12} sm={6} md={4}>
+                        <EventCard event={event} />
+                    </Grid>
+                ))}
+            </Grid>
+        </Container>
+        <Footer/>
+
+      </>
+    );
+};
 
 export default Events;
