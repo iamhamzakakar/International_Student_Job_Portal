@@ -46,12 +46,6 @@ const JobPost = ({ open, setOpen }) => {
                         </Select>
                     </Grid>
                     <Grid item xs={6}>
-                        <FilledInput placeholder="Company Name" disableUnderline fullWidth></FilledInput>
-                    </Grid>
-                    <Grid item xs={6}>
-                        <FilledInput placeholder="Company Url" disableUnderline fullWidth></FilledInput>
-                    </Grid>
-                    <Grid item xs={6}>
                         <Select variant="filled" fullWidth disableUnderline defaultValue={"Remote"}>
                             <MenuItem value='Remote'>Remote</MenuItem>
                             <MenuItem value='In Office'>In-Office</MenuItem>

@@ -50,11 +50,9 @@ exports.signup = async (req, res) => {
                 data: savedUser // Include the user details in the response
             });
         } else {
-            console.error("Invalid role specified!");
-            return res.status(400).send({ message: "Invalid role specifieds!" });
+            return res.status(400).send({ message: "Select Student or Company" });
         }
     } catch (err) {
-        console.error("Error during signup:", err);
         res.status(500).send({ message: err.message });
     }
 };
@@ -107,7 +105,6 @@ exports.signin = async (req, res) => {
             }
         } else {
             userData = await authenticateUser(User, req.body.email, req.body.password, 'student');
-            console.log(userData)
             if (!userData) {
                 return res.status(404).send({ message: "Register as a User" });
             }
