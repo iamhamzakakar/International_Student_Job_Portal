@@ -8,6 +8,8 @@ db.mongoose = mongoose;
 
 db.user = require("./user.model");
 db.company = require("./company.model");
+db.job = require("./job.model");
+
 db.url = dbConfig.url;
 
 module.exports = db;

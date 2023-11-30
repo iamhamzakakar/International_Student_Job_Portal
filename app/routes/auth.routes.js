@@ -1,5 +1,6 @@
 const { verifySignUp } = require("../middlewares");
 const controller = require("../controllers/auth.controller");
+// const jobcontroller = require("../controllers/job.controller");
 
 module.exports = function(app) {
     app.use(function(req, res, next) {
@@ -20,4 +21,6 @@ module.exports = function(app) {
     );
 
     app.post("/api/auth/signin", controller.signin);
+    // app.post("/api/post-job", jobcontroller.postJob);
+
 };

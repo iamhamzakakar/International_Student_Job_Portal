@@ -2,7 +2,7 @@ const db = require("../models");
 const Company = db.company;
 const User = db.user;
 
-checkDuplicateEmail = async (req, res, next) => {
+const checkDuplicateEmail = async (req, res, next) => {
     try {
         const email = req.body.email;
 
