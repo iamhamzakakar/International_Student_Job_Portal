@@ -2,7 +2,6 @@ import React, {useContext} from "react";
 import { Typography, Button, Box, Grid } from "@mui/material";
 import { UserContext } from "../UserContext/UserContext";
 
-
 const Header = ({openNewJobModal} ) => {
     const { user } = useContext(UserContext);
        return (
