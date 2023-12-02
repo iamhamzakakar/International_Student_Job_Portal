@@ -1,6 +1,6 @@
 // App.js
 import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter,  Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material';
 import Home from './Pages/Home';
 import JobList from './Pages/JobList';
@@ -12,7 +12,7 @@ import Pagenotfound from './Pages/Pagenotfound';
 import Events from './Pages/Events';
 import theme from './theme/theme';
 import { UserProvider }  from './Components/UserContext/UserContext';
-
+import {Helmet} from "react-helmet";
 
 
 const App = () => {
@@ -37,8 +37,14 @@ const App = () => {
     }
     return (
         <ThemeProvider theme={theme}>
+            <Helmet>
+                <meta charSet="utf-8" />
+                <title>StudyFinJourney</title>
+                <link rel="canonical" href="http://mysite.com/example" />
+                <meta name="description" content="Find Your First Student Job" />
+            </Helmet>
             <UserProvider>
-                <Router>
+                <BrowserRouter>
                     <Routes>
                         <Route path="/home" element={<Home />} />
                         <Route path="/about" element={<About />} />
@@ -49,7 +55,7 @@ const App = () => {
                         <Route path="/events" element={<Events />} />
                         <Route path="*" element={<Pagenotfound />} />
                     </Routes>
-                </Router>
+                </BrowserRouter>
             </UserProvider>
         </ThemeProvider>
     );

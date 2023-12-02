@@ -61,7 +61,7 @@ const Events = () => {
       <>
         <NavBar/>
         <Container>
-            <Typography variant="h1" align="center" gutterBottom>
+            <Typography variant="h2" align="center" gutterBottom>
                 Upcoming Events
             </Typography>
             <Typography variant="body1" align="center" paragraph>
