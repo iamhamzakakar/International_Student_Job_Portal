@@ -75,7 +75,7 @@ const NavBar = () => {
                         open={Boolean(anchorEl)}
                         onClose={handleClose}
                     >
-                        <MenuItem onClick={handleClose} component={NavLink} to="/" activeClassName="active" >Profile</MenuItem>
+                        <MenuItem onClick={handleClose} component={NavLink} to="/Profile" activeClassName="active" >Profile</MenuItem>
                         <MenuItem onClick={handleClose}>Logout</MenuItem>
                     </Menu>
                 </Toolbar>

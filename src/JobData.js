@@ -1,5 +1,3 @@
-// jobData.js
-
 const jobData = [
   {
     id: 1,
@@ -11,6 +9,12 @@ const jobData = [
     companyUrl: "Google.com",
     skills: ["Javascript", "React.js", "Node.js"],
     link: "https://google.com/careers",
+    summary: "This is a position for a skilled frontend developer...",
+    qualifications: "Bachelor's degree in Computer Science...",
+    experience: "2+ years in frontend development...",
+    salaryRange: "$80,000 - $120,000",
+    workingHours: "9am - 5pm",
+    applicationInstructions: "Submit your resume through the provided link..."
   },
   {
     id: 2,
@@ -22,6 +26,12 @@ const jobData = [
     companyUrl: "Yahoo.com",
     skills: ["Angular", "Node.js"],
     link: "https://yahoo.com/jobs",
+    summary: "Looking for an experienced backend developer...",
+    qualifications: "At least 3 years of experience in backend development...",
+    experience: "Familiarity with cloud services...",
+    salaryRange: "$70,000 - $100,000",
+    workingHours: "Flexible",
+    applicationInstructions: "Please apply directly on our website..."
   },
   {
     id: 3,
@@ -33,6 +43,12 @@ const jobData = [
     companyUrl: "https://facebook.com",
     skills: ["flutter"],
     link: "https://facebook.com/careers",
+    summary: "Seeking a creative mobile developer proficient in Flutter...",
+    qualifications: "Proven experience with mobile applications...",
+    experience: "2+ years of mobile development experience...",
+    salaryRange: "Based on contract",
+    workingHours: "As per project requirements",
+    applicationInstructions: "Send your portfolio to our HR department..."
   },
 ];
 

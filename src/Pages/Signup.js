@@ -126,7 +126,6 @@ const SignUp = () => {
                                     <MenuItem value={"Lut"}>Lappeenranta–Lahti University of Technology LUT</MenuItem>
                                     <MenuItem value={"University of Helsinki"}>University of Helsinki</MenuItem>
                                     <MenuItem value={"OULU Uni"}>University of Oulu</MenuItem>
-                                    {/* Add more options as needed */}
                                 </Select>
                             </FormControl>
                         </>
