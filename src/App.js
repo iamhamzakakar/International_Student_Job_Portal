@@ -12,6 +12,7 @@ import Pagenotfound from './Pages/Pagenotfound';
 import Events from './Pages/Events';
 import theme from './theme/theme';
 import { UserProvider }  from './Components/UserContext/UserContext';
+import Profiles from './Pages/Profiles';
 import {Helmet} from "react-helmet";
 
 
@@ -53,6 +54,7 @@ const App = () => {
                         <Route path="/signup" element={<Signup />} />
                         <Route path="/joblist" element={<JobList />} />
                         <Route path="/events" element={<Events />} />
+                        <Route path='/Profile' element={<Profiles/>} />
                         <Route path="*" element={<Pagenotfound />} />
                     </Routes>
                 </BrowserRouter>
