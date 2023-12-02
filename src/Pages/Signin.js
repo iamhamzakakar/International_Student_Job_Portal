@@ -41,11 +41,16 @@ const Signin = () => {
         if (data.accessToken) {
             // Store the token and redirect user or update UI
             localStorage.setItem('authToken', data.accessToken);
+            const jsonData = JSON.stringify(data);
+            localStorage.setItem('userData', jsonData);
+
+
             navigate("/home");
         } else {
             toast.error(data.message || 'An error occurred');
         }
     };
+
 
     const handleChange = (event) => {
         setValue(event.target.value);

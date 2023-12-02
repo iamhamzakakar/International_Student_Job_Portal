@@ -1,34 +1,58 @@
-//App.js
-import React from 'react';
-import {BrowserRouter, Routes, Route} from 'react-router-dom'
+// App.js
+import React, { useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material';
-import Home  from './Pages/Home';
+import Home from './Pages/Home';
 import JobList from './Pages/JobList';
 import About from './Pages/About';
 import Contact from './Pages/Contact';
 import Signin from './Pages/Signin';
 import Signup from './Pages/Signup';
 import Pagenotfound from './Pages/Pagenotfound';
-import theme from './theme/theme'
 import Events from './Pages/Events';
+import theme from './theme/theme';
+import { UserProvider }  from './Components/UserContext/UserContext';
+
+
 
 const App = () => {
-   return (
-    <ThemeProvider theme={theme}>
-       <BrowserRouter>
-         <Routes>
-           <Route path='/home' element={<Home/>} />
-           <Route path='/About' element={<About/>} />
-           <Route path='/Contact' element={<Contact/>} />
-           <Route path='/' element={<Signin/>} />
-           <Route path='/Signup' element={<Signup/>} />
-           <Route path='/JobList' element={<JobList/>} />
-           <Route path='/Events' element={<Events/>} />
-           <Route path='*' element={<Pagenotfound/>} />
-         </Routes>
-       </BrowserRouter>
-     </ThemeProvider>
-   
-   );
- }
- export default App;
+    const [user, setUser] = React.useState(null);
+    const [isLoading, setIsLoading] = React.useState(true);
+
+    useEffect(() => {
+        const storedUser = localStorage.getItem('userData');
+
+        try {
+            if (storedUser) {
+                const parsedUser = JSON.parse(storedUser);
+                setUser(parsedUser);
+            }
+            setIsLoading(false);
+        } catch (error) {
+            console.error('Error parsing user data:', error);
+        }
+    }, []);
+    if (isLoading) {
+        return <div>Loading...</div>;
+    }
+    return (
+        <ThemeProvider theme={theme}>
+            <UserProvider>
+                <Router>
+                    <Routes>
+                        <Route path="/home" element={<Home />} />
+                        <Route path="/about" element={<About />} />
+                        <Route path="/contact" element={<Contact />} />
+                        <Route path="/" element={<Signin />} />
+                        <Route path="/signup" element={<Signup />} />
+                        <Route path="/joblist" element={<JobList />} />
+                        <Route path="/events" element={<Events />} />
+                        <Route path="*" element={<Pagenotfound />} />
+                    </Routes>
+                </Router>
+            </UserProvider>
+        </ThemeProvider>
+    );
+};
+
+export default App;

@@ -1,4 +1,4 @@
-import {React,useState} from 'react'
+import {React,useState, useContext} from 'react'
 import { ThemeProvider, Grid } from '@mui/material';
 import theme from '../theme/theme';
 import Header from '../Components/Header';
@@ -12,11 +12,13 @@ import Footer from '../Components/Footer/index.js';
 
 
 const JobList = () => {
-  const [isNewJobModalOpen, setNewJobModalOpen] = useState(false);
+
+    const [isNewJobModalOpen, setNewJobModalOpen] = useState(false);
   return (
     <ThemeProvider theme={theme}>
       <NavBar/>
       <CssBaseline />
+
       <Header openNewJobModal={() => setNewJobModalOpen(true)}/>
       <NewJobModal open={isNewJobModalOpen} setOpen={setNewJobModalOpen}/>
       <Grid container justifyContent={"center"}>

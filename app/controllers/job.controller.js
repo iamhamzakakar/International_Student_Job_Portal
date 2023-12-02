@@ -5,7 +5,7 @@ exports.createJob = async (req, res) => {
     try {
 
 
-        // Check if the required fields are provided
+console.log(req.body)
         if (! req.body.title || ! req.body.type || ! req.body.company_id ) {
             return res.status(400).json({ message: 'Please provide all required fields' });
         }
