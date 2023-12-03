@@ -78,6 +78,7 @@ const NavBar = () => {
                         onClose={handleClose}
                     >
                         <MenuItem onClick={handleClose} component={NavLink} to={`/Profile/${user && user.id}`}  activeClassName="active" >Profile</MenuItem>
+                        <MenuItem onClick={handleClose} component={NavLink} to={`/AppliedJobs`}  activeClassName="active" >Applied Jobs</MenuItem>
                         <MenuItem onClick={handleClose}>Logout</MenuItem>
                     </Menu>
                 </Toolbar>
