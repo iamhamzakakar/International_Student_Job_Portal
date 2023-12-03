@@ -11,6 +11,10 @@ const jobSchema = new mongoose.Schema({
         link: String,
         description: String,
         nature: String,
+        experience: String,
+        qualification: String,
+        shift: String,
+        skills: [String],
         created: {
                 type: Date,
                 default: Date.now // Set the default value to the current timestamp when a job is created

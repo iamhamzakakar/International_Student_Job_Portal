@@ -13,6 +13,15 @@ const JobPost = ({ open, setOpen }) => {
     const { user, isLoading } = useContext(UserContext);
     const [isPosting, setIsPosting] = useState(false);
 
+    const skills = [
+        "JavaScript",
+        "React",
+        "Node",
+        "Html",
+        "MongoDb",
+        "SQL"
+    ];
+
     const VisuallyHiddenInput = styled('input')({
         clip: 'rect(0 0 0 0)',
         clipPath: 'inset(50%)',
@@ -32,7 +41,12 @@ const JobPost = ({ open, setOpen }) => {
         link: '',
         description: '',
         company_id: null,
+        experience: '',
+        shift: '',
+        qualification: '',
+        skills: [], // Updated to include skills
     });
+
     useEffect(() => {
         if (user) {
             setJobData(prevState => ({
@@ -57,45 +71,56 @@ const JobPost = ({ open, setOpen }) => {
         });
     };
 
-
+    const handleSkillsChange = (event) => {
+        const selectedSkills = Array.from(event.target.value);
+        setJobData((prevState) => ({
+            ...prevState,
+            skills: selectedSkills,
+        }));
+    };
 
     const handlePostJob = async () => {
         setIsPosting(true);
 
         setTimeout(async () => {
-        try {
-            const formData = new FormData();
-            formData.append('title', jobData.title);
-            formData.append('type', jobData.type);
-            formData.append('nature', jobData.nature);
-            formData.append('link', jobData.link);
-            formData.append('description', jobData.description);
-            formData.append('company_id', jobData.company_id);
+            try {
+                const formData = new FormData();
+                formData.append('title', jobData.title);
+                formData.append('type', jobData.type);
+                formData.append('nature', jobData.nature);
+                formData.append('link', jobData.link);
+                formData.append('description', jobData.description);
+                formData.append('company_id', jobData.company_id);
+                formData.append('experience', jobData.experience);
+                formData.append('qualification', jobData.qualification);
+                formData.append('shift', jobData.shift);
+                jobData.skills.forEach(skill => {
+                    formData.append('skills[]', skill);
+                });
 
-            const response = await fetch('http://127.0.0.1:8080/api/post-job', {
-                method: 'POST',
-                body: formData,
-            });
+                const response = await fetch('http://127.0.0.1:8080/api/post-job', {
+                    method: 'POST',
+                    body: formData,
+                });
 
-            if (response.ok) {
-                const data = await response.json();
-                if (data.message) {
-                    handleClose();
-                    toast.error(data.message || 'An error occurred');
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.message) {
+                        handleClose();
+                        toast.error(data.message || 'An error occurred');
+                    } else {
+                        toast.error(data.message || 'An error occurred');
+                    }
+                    console.log('Job posted successfully!');
                 } else {
-                    toast.error(data.message || 'An error occurred');
+                    // Handle error response
+                    console.error('Failed to post job:', response.statusText);
                 }
-                console.log('Job posted successfully!');
-            } else {
-                // Handle error response
-                console.error('Failed to post job:', response.statusText);
+            } catch (error) {
+                console.error('Error posting job:', error);
+            } finally {
+                setIsPosting(false);
             }
-        } catch (error) {
-            console.error('Error posting job:', error);
-        }finally {
-            setIsPosting(false);
-
-        }
         }, 3000);
     };
 
@@ -123,9 +148,9 @@ const JobPost = ({ open, setOpen }) => {
                                 onChange={(e) => handleInputChange('type', e.target.value)}
                         >
                             <MenuItem value='job-type'>Select Job Type</MenuItem>
-                            <MenuItem value='part-time'>Part time</MenuItem>
-                            <MenuItem value='contract'>Contract</MenuItem>
-                            <MenuItem value='full-time'>Full time</MenuItem>
+                            <MenuItem value='Part time'>Part time</MenuItem>
+                            <MenuItem value='Contract'>Contract</MenuItem>
+                            <MenuItem value='Full time'>Full time</MenuItem>
                         </Select>
                     </Grid>
                     <Grid item xs={6}>
@@ -134,8 +159,8 @@ const JobPost = ({ open, setOpen }) => {
 
                         >
                             <MenuItem value='job-nature'>Select Job Nature</MenuItem>
-                            <MenuItem value='remote'>Remote</MenuItem>
-                            <MenuItem value='in-office'>In-Office</MenuItem>
+                            <MenuItem value='Remote'>Remote</MenuItem>
+                            <MenuItem value='In Office'>In-Office</MenuItem>
                         </Select>
                     </Grid>
                     <Grid item xs={6}>
@@ -143,6 +168,46 @@ const JobPost = ({ open, setOpen }) => {
                                      onChange={(e) => handleInputChange('link', e.target.value)}
 
                         ></FilledInput>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <FilledInput placeholder="Experience"  disableUnderline fullWidth
+                                     onChange={(e) => handleInputChange('experience', e.target.value)}
+
+                        ></FilledInput>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <FilledInput placeholder="Qualification"  disableUnderline fullWidth
+                                     onChange={(e) => handleInputChange('qualification', e.target.value)}
+
+                        ></FilledInput>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <Select
+                            defaultValue={"skills"}
+                            variant="filled"
+                            fullWidth
+                            disableUnderline
+                            multiple
+                            value={jobData.skills}
+                            onChange={handleSkillsChange}
+                        >
+                            <MenuItem disabled value="skills">Select Skills</MenuItem>
+                            {skills.map((skill) => (
+                                <MenuItem key={skill} value={skill}>
+                                    {skill}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <Select variant="filled" fullWidth disableUnderline defaultValue={"shift"}
+                                onChange={(e) => handleInputChange('shift', e.target.value)}
+
+                        >
+                            <MenuItem value='shift'>Select Working Shift</MenuItem>
+                            <MenuItem value='Morning'>Morining</MenuItem>
+                            <MenuItem value='Evening'>Evening</MenuItem>
+                        </Select>
                     </Grid>
                     <Grid item xs={12}>
                         <FilledInput  placeholder="Job Description" disableUnderline fullWidth multiline rows={4}
@@ -154,6 +219,8 @@ const JobPost = ({ open, setOpen }) => {
             <DialogActions>
                 <Box width='100%' display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
                     <Typography variant="caption" color={'secondary.main'}>Required Fields *</Typography>
+
+
                     <Button variant="contained" disableElevation onClick={handlePostJob}>
                         Post Job
                     </Button>

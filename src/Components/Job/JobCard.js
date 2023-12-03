@@ -5,9 +5,9 @@ const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const JobCard = ({ id, postedOn, title, type, location, companyName, companyUrl, skills, link, ...jobDetails }) => {
+const JobCard = ({ id, postedOn, title, type, location, companyName, link, skills, experience, qualification, ...jobDetails }) => {
     const [open, setOpen] = useState(false);
-    const [jobData, setJobData] = useState(null);
+
 
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -16,28 +16,12 @@ const JobCard = ({ id, postedOn, title, type, location, companyName, companyUrl,
         window.open(link, '_blank'); // Open the application link in a new tab
     };
 
-    // Function to format the date
-    const formatDate = (date) => {
-        return date.toLocaleDateString();
-    };
-
-    // Fetch job details when the component mounts
-    useEffect(() => {
-        const fetchJobDetails = async () => {
-            try {
-                const response = await fetch('http://127.0.0.1:8080/api/get-job');
-                const data = await response.json();
-                console.log(data.jobs)
-                setJobData(data.jobs); // Assuming the response has a 'jobs' key containing an array of job details
-            } catch (error) {
-                console.error('Error fetching job details:', error);
-            }
-        };
-
-        fetchJobDetails();
-    }, []); // Empty dependency array ensures the effect runs only once when the component mounts
-
-
+    const dateObject = new Date(postedOn);
+    const formattedDate = dateObject.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    });
     return (
     <>
       <Box p={2} mb={2} sx={{
@@ -64,29 +48,27 @@ const JobCard = ({ id, postedOn, title, type, location, companyName, companyUrl,
               fontweight: 'bold'
             }} variant='subtitle1'>{companyName}</Typography>
           </Grid>
-          {/* Second Grid item container for the skills list */}
-          <Grid item xs={12} sm={4}>
-            <Grid container spacing={1}>
-              {skills.map((skill, index) => (
-                <Grid sx={{
-                  margin: '4px',
-                  padding: '6px',
-                  fontSize: '14.5px',
-                  borderRadius: '5px',
-                  cursor: 'pointer',
-                  fontWeight: 'bold',
-                  backgroundColor: 'text.secondary',
-                  color: 'background.default'
-                }} key={index} item>
-                  <Typography>{skill}</Typography>
+            <Grid item xs={12} sm={4}>
+                <Grid container spacing={1}>
+                    {skills.map((skill, index) => (
+                        <Grid sx={{
+                            margin: '4px',
+                            padding: '6px',
+                            fontSize: '14.5px',
+                            borderRadius: '5px',
+                            cursor: 'pointer',
+                            fontWeight: 'bold',
+                            backgroundColor: 'text.secondary',
+                            color: 'background.default'
+                        }} key={index} item>
+                            <Typography>{skill}</Typography>
+                        </Grid>
+                    ))}
                 </Grid>
-              ))}
             </Grid>
-          </Grid>
-          {/* Third Grid item for the job details */}
           <Grid item xs={12} sm={4} container direction="column" alignItems="flex-end">
             <Grid item>
-              <Typography variant='caption2'>{formatDate(postedOn)} | {type} | {location}</Typography>
+              <Typography variant='caption2'>{formattedDate} | {type} | {location}</Typography>
             </Grid>
             <Grid item>
               <Box mt={2}>
@@ -109,13 +91,10 @@ const JobCard = ({ id, postedOn, title, type, location, companyName, companyUrl,
       <DialogTitle>{title}</DialogTitle>
       <DialogContent>
           <DialogContentText id="job-details-description">
-              <Typography gutterBottom>Job Summary: {jobDetails.summary}</Typography>
-              <Typography gutterBottom>Qualifications: {jobDetails.qualifications}</Typography>
+              <Typography gutterBottom>Job Summary: {jobDetails.description}</Typography>
+              <Typography gutterBottom>Qualifications: {jobDetails.qualification}</Typography>
               <Typography gutterBottom>Experience: {jobDetails.experience}</Typography>
               <Typography gutterBottom>Location: {location}</Typography>
-              <Typography gutterBottom>Salary Range: {jobDetails.salaryRange}</Typography>
-              <Typography gutterBottom>Working Hours: {jobDetails.workingHours}</Typography>
-              <Typography gutterBottom>Application Instructions: {jobDetails.applicationInstructions}</Typography>
           </DialogContentText>
       </DialogContent>
       <DialogActions>
