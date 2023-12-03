@@ -105,9 +105,11 @@ const JobPost = ({ open, setOpen }) => {
 
                 if (response.ok) {
                     const data = await response.json();
+                    console.log("data",data)
                     if (data.message) {
                         handleClose();
-                        toast.error(data.message || 'An error occurred');
+                        window.location.reload();
+                        toast.info(data.message || 'An error occurred');
                     } else {
                         toast.error(data.message || 'An error occurred');
                     }

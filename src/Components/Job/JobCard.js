@@ -5,7 +5,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const JobCard = ({ id, postedOn, title, type, location, companyName, link, skills, experience, qualification, ...jobDetails }) => {
+const JobCard = ({ id, postedOn, title, type, location, companyName, link, skills, experience, qualification,shift, description, ...jobDetails }) => {
     const [open, setOpen] = useState(false);
 
 
@@ -89,14 +89,15 @@ const JobCard = ({ id, postedOn, title, type, location, companyName, link, skill
         aria-describedby="job-details-description"
         >
       <DialogTitle>{title}</DialogTitle>
-      <DialogContent>
-          <DialogContentText id="job-details-description">
-              <Typography gutterBottom>Job Summary: {jobDetails.description}</Typography>
-              <Typography gutterBottom>Qualifications: {jobDetails.qualification}</Typography>
-              <Typography gutterBottom>Experience: {jobDetails.experience}</Typography>
-              <Typography gutterBottom>Location: {location}</Typography>
-          </DialogContentText>
-      </DialogContent>
+          <DialogContent>
+              <DialogContentText id="job-details-description">
+                  <Typography gutterBottom>Job Summary: {description}</Typography> {/* Updated this line */}
+                  <Typography gutterBottom>Qualifications: {qualification}</Typography>
+                  <Typography gutterBottom>Experience: {experience}</Typography>
+                  <Typography gutterBottom>Shift: {shift}</Typography>
+                  <Typography gutterBottom>Location: {location}</Typography>
+              </DialogContentText>
+          </DialogContent>
       <DialogActions>
           <Button color="primary" variant="contained" onClick={handleApply}>
                         Apply

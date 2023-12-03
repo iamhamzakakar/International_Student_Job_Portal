@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { Button, Box } from '@mui/material';
 
-const ImageUpload = ({ label }) => {
-    const [image, setImage] = useState(null);
-
+const ImageUpload = ({ label, onImageSelect, initialImage   }) => {
+    const [image, setImage] = useState(initialImage || null);
     const handleImageChange = (e) => {
         if (e.target.files && e.target.files[0]) {
             let img = e.target.files[0];
             setImage(URL.createObjectURL(img));
+            onImageSelect(img);
         }
     };
 
