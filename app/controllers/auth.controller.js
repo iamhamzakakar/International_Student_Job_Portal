@@ -10,10 +10,10 @@ exports.signup = async (req, res) => {
     try {
         let user;
         let company;
-
+console.log(req.body)
         if (req.body.role === 'company') {
             company = new Company({
-                name: req.body.username,
+                name: req.body.name,
                 email: req.body.email,
                 password: bcrypt.hashSync(req.body.password, 8),
                 website: req.body.website,

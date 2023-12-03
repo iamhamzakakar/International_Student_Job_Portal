@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, {useContext, useState} from 'react';
 import { NavLink } from 'react-router-dom';
 import { AppBar, Toolbar, Typography, Button, IconButton, Menu, MenuItem } from '@mui/material';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import theme from '../../theme/theme';
 import { ThemeProvider, CssBaseline } from '@mui/material';
-
+import { UserContext } from "../UserContext/UserContext";
 const NavBar = () => {
+    const { user } = useContext(UserContext);
     const [anchorEl, setAnchorEl] = useState(null);
 
     const handleMenu = (event) => {
@@ -36,7 +37,8 @@ const NavBar = () => {
                     })}>
                         Home
                     </Button>
-                <Button color="inherit" component={NavLink} to="/JobList" 
+                <Button
+                    color="inherit" component={NavLink} to="/JobList"
                     style={({isActive})=>({color: isActive ? '#1d1c1c' : 'inherit',
                     backgroundColor: isActive ? '#71c4ef' : 'transparent',})}>
                     Job Listing
@@ -75,7 +77,7 @@ const NavBar = () => {
                         open={Boolean(anchorEl)}
                         onClose={handleClose}
                     >
-                        <MenuItem onClick={handleClose} component={NavLink} to="/Profile" activeClassName="active" >Profile</MenuItem>
+                        <MenuItem onClick={handleClose} component={NavLink} to={`/Profile/${user && user.id}`}  activeClassName="active" >Profile</MenuItem>
                         <MenuItem onClick={handleClose}>Logout</MenuItem>
                     </Menu>
                 </Toolbar>

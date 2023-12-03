@@ -5,12 +5,16 @@ const jobSchema = new mongoose.Schema({
         type: String,
         company_id: {
                 type: mongoose.Schema.Types.ObjectId,
-                ref: 'Company'
+                ref: 'Company',
+                required: true
         },
         link: String,
         description: String,
-        cv: String,
-        nature: String
+        nature: String,
+        created: {
+                type: Date,
+                default: Date.now // Set the default value to the current timestamp when a job is created
+        }
 });
 
 const Job = mongoose.model("Job", jobSchema);

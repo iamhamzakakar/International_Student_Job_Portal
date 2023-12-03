@@ -7,7 +7,9 @@ const User = mongoose.model(
         email: String,
         password: String,
         role: String,
-        university: String
+        university: String,
+        cv: String,
+        profile_picture: String
     })
 );
 

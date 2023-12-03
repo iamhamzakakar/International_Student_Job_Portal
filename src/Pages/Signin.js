@@ -43,9 +43,8 @@ const Signin = () => {
             localStorage.setItem('authToken', data.accessToken);
             const jsonData = JSON.stringify(data);
             localStorage.setItem('userData', jsonData);
-
-
             navigate("/home");
+            window.location.reload();
         } else {
             toast.error(data.message || 'An error occurred');
         }

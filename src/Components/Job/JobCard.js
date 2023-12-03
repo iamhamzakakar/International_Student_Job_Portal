@@ -1,27 +1,44 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, Grid, Typography, Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Slide } from '@mui/material';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
+    return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const JobCard = ({ id, postedOn, title, type, location, companyName, companyUrl, skills, link, ...jobDetails }) => 
-  {
-  const [open, setOpen] = useState(false);
+const JobCard = ({ id, postedOn, title, type, location, companyName, companyUrl, skills, link, ...jobDetails }) => {
+    const [open, setOpen] = useState(false);
+    const [jobData, setJobData] = useState(null);
 
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
 
-  const handleApply = () => {
-    window.open(link, '_blank'); // Open the application link in a new tab
-  };
+    const handleApply = () => {
+        window.open(link, '_blank'); // Open the application link in a new tab
+    };
 
-  // Function to format the date
-  const formatDate = (date) => {
-      return date.toLocaleDateString();
-  };
+    // Function to format the date
+    const formatDate = (date) => {
+        return date.toLocaleDateString();
+    };
 
-  return (
+    // Fetch job details when the component mounts
+    useEffect(() => {
+        const fetchJobDetails = async () => {
+            try {
+                const response = await fetch('http://127.0.0.1:8080/api/get-job');
+                const data = await response.json();
+                console.log(data.jobs)
+                setJobData(data.jobs); // Assuming the response has a 'jobs' key containing an array of job details
+            } catch (error) {
+                console.error('Error fetching job details:', error);
+            }
+        };
+
+        fetchJobDetails();
+    }, []); // Empty dependency array ensures the effect runs only once when the component mounts
+
+
+    return (
     <>
       <Box p={2} mb={2} sx={{
           border: '1px solid #e8e8e8',

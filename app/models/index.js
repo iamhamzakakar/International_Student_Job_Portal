@@ -9,6 +9,7 @@ db.mongoose = mongoose;
 db.user = require("./user.model");
 db.company = require("./company.model");
 db.job = require("./job.model");
+db.contactus = require("./contactus.model");
 
 db.url = dbConfig.url;
 

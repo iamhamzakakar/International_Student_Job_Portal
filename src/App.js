@@ -54,7 +54,7 @@ const App = () => {
                         <Route path="/signup" element={<Signup />} />
                         <Route path="/joblist" element={<JobList />} />
                         <Route path="/events" element={<Events />} />
-                        <Route path='/Profile' element={<Profiles/>} />
+                        <Route path='/Profile/:id' element={<Profiles/>} />
                         <Route path="*" element={<Pagenotfound />} />
                     </Routes>
                 </BrowserRouter>

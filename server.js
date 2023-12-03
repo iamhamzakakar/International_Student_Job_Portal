@@ -53,3 +53,5 @@ app.listen(PORT, () => {
 require('./app/routes/auth.routes')(app);
 require('./app/routes/user.routes')(app);
 require('./app/routes/job.routes')(app);
+require('./app/routes/contact.routes')(app);
+require('./app/routes/profile.routes')(app);

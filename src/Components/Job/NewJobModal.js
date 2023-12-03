@@ -3,12 +3,15 @@ import { Box, Button, Grid, FilledInput, Select, MenuItem, Dialog, DialogTitle, 
 import { Close as CloseButton } from '@mui/icons-material';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { styled } from '@mui/material/styles';
+import 'react-toastify/dist/ReactToastify.css';
 import {toast} from "react-toastify";
 import { UserContext } from "../UserContext/UserContext";
-
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const JobPost = ({ open, setOpen }) => {
     const { user, isLoading } = useContext(UserContext);
+    const [isPosting, setIsPosting] = useState(false);
 
     const VisuallyHiddenInput = styled('input')({
         clip: 'rect(0 0 0 0)',
@@ -28,7 +31,6 @@ const JobPost = ({ open, setOpen }) => {
         nature: '',
         link: '',
         description: '',
-        cv: null,
         company_id: null,
     });
     useEffect(() => {
@@ -55,17 +57,12 @@ const JobPost = ({ open, setOpen }) => {
         });
     };
 
-    const handleFileChange = (event) => {
-        const file = event.target.files[0];
-        console.log(file)
-        setJobData({
-            ...jobData,
-            cv: file,
-        });
-    };
 
 
     const handlePostJob = async () => {
+        setIsPosting(true);
+
+        setTimeout(async () => {
         try {
             const formData = new FormData();
             formData.append('title', jobData.title);
@@ -73,7 +70,6 @@ const JobPost = ({ open, setOpen }) => {
             formData.append('nature', jobData.nature);
             formData.append('link', jobData.link);
             formData.append('description', jobData.description);
-            formData.append('cv', jobData.cv);
             formData.append('company_id', jobData.company_id);
 
             const response = await fetch('http://127.0.0.1:8080/api/post-job', {
@@ -84,8 +80,8 @@ const JobPost = ({ open, setOpen }) => {
             if (response.ok) {
                 const data = await response.json();
                 if (data.message) {
-                    toast.success(data.message || 'An error occurred');
                     handleClose();
+                    toast.error(data.message || 'An error occurred');
                 } else {
                     toast.error(data.message || 'An error occurred');
                 }
@@ -96,10 +92,15 @@ const JobPost = ({ open, setOpen }) => {
             }
         } catch (error) {
             console.error('Error posting job:', error);
+        }finally {
+            setIsPosting(false);
+
         }
+        }, 3000);
     };
 
     return(
+        <>
         <Dialog open={open} fullWidth>
             <DialogTitle>
                 <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
@@ -149,15 +150,6 @@ const JobPost = ({ open, setOpen }) => {
                         ></FilledInput>
                     </Grid>
                 </Grid>
-                <Box mt={2} display="flex" flexDirection="column" alignItems="center">
-                    <Typography>Upload Your Resume</Typography>
-                    <Box display="flex" justifyContent="center" width="100%">
-                        <Button component="label" variant="contained" disableElevation startIcon={<CloudUploadIcon />}>
-                            Upload file
-                            <input type="file" onChange={handleFileChange} style={{ display: 'none' }} />
-                        </Button>
-                    </Box>
-                </Box>
             </DialogContent>
             <DialogActions>
                 <Box width='100%' display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
@@ -168,7 +160,14 @@ const JobPost = ({ open, setOpen }) => {
                 </Box>
             </DialogActions>
         </Dialog>
-    )
+            <Backdrop
+                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                open={isPosting}
+            >
+                <CircularProgress color="inherit" />
+            </Backdrop>
+        </>
+            );
 
 };
 export default JobPost;
