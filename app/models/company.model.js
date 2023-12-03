@@ -3,10 +3,7 @@ const mongoose = require("mongoose");
 const Company = mongoose.model(
     "Company",
     new mongoose.Schema({
-            name: {
-                    type: String,
-                    required: true
-            },
+        name: String,
         email: String,
         password: String,
         role: String,

@@ -10,7 +10,7 @@ exports.signup = async (req, res) => {
     try {
         let user;
         let company;
-console.log(req.body)
+
         if (req.body.role === 'company') {
             company = new Company({
                 name: req.body.name,
