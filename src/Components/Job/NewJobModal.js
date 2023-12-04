@@ -1,7 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
-import { Box, Button, Grid, FilledInput, Select, MenuItem, Dialog, DialogTitle, DialogContent, DialogActions, Typography, IconButton } from '@mui/material';
+import { Box, Button, Grid, FilledInput, Select, MenuItem, Dialog, DialogTitle, DialogContent, DialogActions, Typography, IconButton, Snackbar } from '@mui/material';
 import { Close as CloseButton } from '@mui/icons-material';
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { styled } from '@mui/material/styles';
 import 'react-toastify/dist/ReactToastify.css';
 import {toast} from "react-toastify";
@@ -12,6 +11,8 @@ import CircularProgress from '@mui/material/CircularProgress';
 const JobPost = ({ open, setOpen }) => {
     const { user, isLoading } = useContext(UserContext);
     const [isPosting, setIsPosting] = useState(false);
+    const [snackbar, setSnackbar] = useState({ open: false, message: '' });
+
 
     const skills = [
         "JavaScript",
@@ -80,6 +81,31 @@ const JobPost = ({ open, setOpen }) => {
     };
 
     const handlePostJob = async () => {
+        if (!jobData.title.trim()) {
+            setSnackbar({ open: true, message: 'Add Post Name' });
+            return;
+        }
+        if (jobData.type === 'job-type' || !jobData.type.trim()) {
+            setSnackbar({ open: true, message: 'Select Job Type' });
+            return;
+        }
+        if (jobData.nature === 'job-nature' || !jobData.nature.trim()) {
+            setSnackbar({ open: true, message: 'Select Job Nature' });
+            return;
+        }
+        if (jobData.shift === 'shift' || !jobData.shift.trim()) {
+            setSnackbar({ open: true, message: 'Select Working Shift' });
+            return;
+        }
+        if (!jobData.description.trim()) {
+            setSnackbar({ open: true, message: 'Add Job Description' });
+            return;
+        }
+        if (!jobData.experience.trim()) {
+            setSnackbar({ open: true, message: 'Add Job Experience' });
+            return;
+        }
+        
         setIsPosting(true);
 
         setTimeout(async () => {
@@ -105,30 +131,45 @@ const JobPost = ({ open, setOpen }) => {
 
                 if (response.ok) {
                     const data = await response.json();
-                    console.log("data",data)
+                    toast.success('Job posted successfully!');
+                    handleClose();
                     if (data.message) {
                         handleClose();
-                        window.location.reload();
-                        toast.info(data.message || 'An error occurred');
+                        toast.error(data.message || 'An error occurred');
                     } else {
                         toast.error(data.message || 'An error occurred');
                     }
                     console.log('Job posted successfully!');
+                    setSnackbar({ open: true, message: 'Job posted successfully!' });
                 } else {
                     // Handle error response
-                    console.error('Failed to post job:', response.statusText);
+                    const errorData = await response.json();
+                    toast.error(errorData.message || 'Failed to post job');
                 }
             } catch (error) {
+                toast.error('An error occurred while posting the job');
                 console.error('Error posting job:', error);
             } finally {
                 setIsPosting(false);
             }
+            
         }, 3000);
+    };
+
+    // Function to close Snackbar
+    const handleCloseSnackbar = () => {
+        setSnackbar({ open: false, message: '' });
     };
 
     return(
         <>
         <Dialog open={open} fullWidth>
+            <Snackbar
+                open={snackbar.open}
+                autoHideDuration={6000}
+                onClose={() => setSnackbar({ open: false, message: '' })}
+                message={snackbar.message}
+            />
             <DialogTitle>
                 <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
                     Post Job
