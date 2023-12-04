@@ -6,7 +6,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const JobCard = ({ id, postedOn, title, type, location, companyName, link, skills, experience, qualification,shift, description, ...jobDetails }) => {
+const JobCard = ({ id, postedOn, title, type, location, companyName, company_id, link, skills, experience, qualification,shift, description, ...jobDetails }) => {
     const [open, setOpen] = useState(false);
     const { user, isLoading } = useContext(UserContext);
 
@@ -30,6 +30,8 @@ const JobCard = ({ id, postedOn, title, type, location, companyName, link, skill
             body: JSON.stringify({
                 user_id: user.id,
                 title: title,
+                company_id: company_id,
+
             }),
         })
             .then(response => response.json())

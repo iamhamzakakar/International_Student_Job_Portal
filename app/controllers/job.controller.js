@@ -36,9 +36,13 @@ exports.createJob = async (req, res) => {
 };
 exports.getAllJobs = async (req, res) => {
     try {
-
         const jobs = await Job.find().populate('company_id');
+
+        console.log('Populated jobs:', jobs);
+
+
         const formattedJobs = jobs.map(job => {
+            console.log('Current job:', job);
 
             return {
                 id: job._id,
@@ -50,7 +54,8 @@ exports.getAllJobs = async (req, res) => {
                 postedOn: job.created,
                 description: job.description,
                 companyName: job.company_id ? job.company_id.name : null,
-                skills:job.skills,
+                company_id: job.company_id ? job.company_id._id : null,
+                skills: job.skills,
                 shift: job.shift,
             };
         });
@@ -62,12 +67,14 @@ exports.getAllJobs = async (req, res) => {
     }
 };
 
+
 exports.applyJob = async (req, res) => {
     try {
 
         const newApplyJob = new ApplyJob({
             position: req.body.title,
             user_id: req.body.user_id,
+            company_id: req.body.company_id
         });
 
 
@@ -82,26 +89,24 @@ exports.applyJob = async (req, res) => {
 
 exports.getAllAppliedJobs = async (req, res) => {
     try {
+        const company_id = req.params.id;
+        console.log('Company ID:', company_id);
+        const jobs = await ApplyJob.find({ company_id: company_id })
+            .populate('user_id')
+            .populate('company_id');
 
-        const applyJob = await ApplyJob.find().populate('company_id');
+        console.log("jobs",jobs)
+
         const formattedJobs = jobs.map(job => {
-
             return {
-                id: job._id,
-                title: job.title,
-                type: job.type,
-                location: job.nature,
-                qualification: job.qualification,
-                experience: job.experience,
-                postedOn: job.created,
-                description: job.description,
+                appliedDate: job.created,
+                username: job.user_id ? job.user_id.name : null,
+                position: job.position,
                 companyName: job.company_id ? job.company_id.name : null,
-                skills:job.skills,
-                shift: job.shift,
             };
         });
 
-        res.status(200).json({ status: true, message: 'Jobs fetched successfully', jobData: formattedJobs });
+        res.status(200).json({ status: true, message: 'Applied Jobs fetched successfully', jobData: formattedJobs });
     } catch (error) {
         console.error(error);
         res.status(500).json({ status: false, message: 'Internal Server Error' });

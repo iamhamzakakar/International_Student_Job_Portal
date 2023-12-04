@@ -56,7 +56,7 @@ const App = () => {
                         <Route path="/joblist" element={<JobList />} />
                         <Route path="/events" element={<Events />} />
                         <Route path='/Profile/:id' element={<Profiles/>} />
-                        <Route path='/AppliedJobs' element={<AppliedJobs/>} />
+                        <Route path='/AppliedJobs/:id' element={<AppliedJobs/>} />
                         <Route path="*" element={<Pagenotfound />} />
                     </Routes>
                 </BrowserRouter>

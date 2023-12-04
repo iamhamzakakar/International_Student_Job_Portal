@@ -22,6 +22,7 @@ const JobList = () => {
                 }
                 const data = await response.json();
                 setJobs(data.jobData);
+                console.log(data.jobData)
             } catch (error) {
                 console.error('Fetch jobs failed:', error);
             }

@@ -26,7 +26,6 @@ const StudentProfile = () => {
                     throw new Error('Failed to fetch student data');
                 }
                 const data = await response.json();
-                console.log(data.photo)
                 setStudentData(data); // Update state with fetched data
             } catch (error) {
                 console.error('Error:', error);
@@ -40,7 +39,6 @@ const StudentProfile = () => {
         setStudentData({ ...studentData, [e.target.name]: e.target.value });
     };
     const handleLogoChange = (newLogo) => {
-        console.log(newLogo)
         setProfileImage(newLogo);
     };
 
@@ -93,10 +91,16 @@ const StudentProfile = () => {
         console.log(file);
         setStudentData({ ...studentData, resume: file });
     };
-
+console.log("photo",studentData.photo)
     const rightContent = (
         <Box>
-            <ImageUpload label="Upload Profile Image" onImageSelect={handleLogoChange} initialImage={`http://127.0.0.1:8080/${studentData.photo}`} />
+            {studentData.photo !== undefined && (
+                <ImageUpload
+                    label="Upload Profile Image"
+                    onImageSelect={handleLogoChange}
+                    initialImage={`http://127.0.0.1:8080/${studentData.photo}`}
+                />
+            )}
         </Box>
     );
 

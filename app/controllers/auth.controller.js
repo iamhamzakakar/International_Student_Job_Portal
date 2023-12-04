@@ -33,7 +33,7 @@ exports.signup = async (req, res) => {
             });
         } else if (req.body.role === 'student') {
             user = new User({
-                username: req.body.username,
+                name: req.body.name,
                 email: req.body.email,
                 password: bcrypt.hashSync(req.body.password, 8),
                 university: req.body.university,

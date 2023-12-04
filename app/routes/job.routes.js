@@ -43,6 +43,13 @@ module.exports = function (app) {
         ],
         jobController.getAllJobs
     );
+    router.get(
+        "/api/get-applied-job/:id",
+        [
+            // Add any middleware you need for job retrieval
+        ],
+        jobController.getAllAppliedJobs
+    );
     router.post(
         "/api/apply-job",
         [
