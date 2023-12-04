@@ -5,7 +5,7 @@ const cookieSession = require("cookie-session");
 const app = express();
 const db = require("./app/models");
 const Role = db.role;
-
+const path = require('path');
 db.mongoose
     .connect(db.url)
     .then(() => {
@@ -29,6 +29,7 @@ app.use(express.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 
+
 app.use(
     cookieSession({
         name: "login-session",
@@ -36,7 +37,7 @@ app.use(
         httpOnly: true
     })
 );
-
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 // simple route
 app.get("/", (req, res) => {
     res.json({ message: "Welcome to job portal application." });

@@ -51,7 +51,7 @@ const SignUp = () => {
 
         const userData = {
             role: value,
-            username: event.target.Name.value,
+            name: event.target.Name.value,
             email: value === "student" ? event.target.Email.value : event.target.WorkEmail.value,
             university: fieldOfStudy,
             website: event.target.Website?.value,
