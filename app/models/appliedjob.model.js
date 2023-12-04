@@ -9,9 +9,9 @@ const appliedjobSchema = new mongoose.Schema({
     },
     created: {
         type: Date,
-        default: Date.now // Set the default value to the current timestamp when a job is created
+        default: Date.now
     }
 });
 
 const Appliedjob = mongoose.model("Appliedjob", appliedjobSchema);
-module.exports = Job;
+module.exports = Appliedjob;
