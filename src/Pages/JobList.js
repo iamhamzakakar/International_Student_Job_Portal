@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ThemeProvider, Grid, CssBaseline } from '@mui/material';
+import { ThemeProvider, Grid, CssBaseline, Pagination } from '@mui/material';
 import theme from '../theme/theme';
 import Header from '../Components/Header';
 import SearchBar from '../Components/Header/SearchBar';
@@ -11,6 +11,8 @@ import Footer from '../Components/Footer/index.js';
 const JobList = () => {
     const [isNewJobModalOpen, setNewJobModalOpen] = useState(false);
     const [jobs, setJobs] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const jobsPerPage = 5;
 
     // Fetching jobs data from the API
     useEffect(() => {
@@ -30,6 +32,16 @@ const JobList = () => {
         fetchJobs();
     }, []);
 
+    // Calculate the current jobs to display
+    const indexOfLastJob = currentPage * jobsPerPage;
+    const indexOfFirstJob = indexOfLastJob - jobsPerPage;
+    const currentJobs = jobs.slice(indexOfFirstJob, indexOfLastJob);
+
+    // Change page
+    const handleChangePage = (event, newPage) => {
+        setCurrentPage(newPage);
+    };
+
     return (
         <ThemeProvider theme={theme}>
             <NavBar/>
@@ -39,7 +51,15 @@ const JobList = () => {
             <Grid container justifyContent={"center"}>
                 <Grid item xs={10}>
                     <SearchBar />
-                    {jobs.map(job => <JobCard key={job.id} {...job} />)}
+                    {currentJobs.map(job => <JobCard key={job.id} {...job} />)}
+                    <Pagination
+                        count={Math.ceil(jobs.length / jobsPerPage)}
+                        page={currentPage}
+                        onChange={handleChangePage}
+                        color="secondary"
+                        align="center"
+                        sx={{ marginTop: 2, paddingBottom: 2 }}
+                    />
                 </Grid>
             </Grid>
             <Footer/>
