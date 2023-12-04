@@ -1,5 +1,6 @@
 // jobController.js
 const Job = require('../models/job.model');
+const ApplyJob = require('../models/appliedjob.model');
 
 
 exports.createJob = async (req, res) => {
@@ -36,8 +37,53 @@ exports.createJob = async (req, res) => {
 exports.getAllJobs = async (req, res) => {
     try {
 
-
         const jobs = await Job.find().populate('company_id');
+        const formattedJobs = jobs.map(job => {
+
+            return {
+                id: job._id,
+                title: job.title,
+                type: job.type,
+                location: job.nature,
+                qualification: job.qualification,
+                experience: job.experience,
+                postedOn: job.created,
+                description: job.description,
+                companyName: job.company_id ? job.company_id.name : null,
+                skills:job.skills,
+                shift: job.shift,
+            };
+        });
+
+        res.status(200).json({ status: true, message: 'Jobs fetched successfully', jobData: formattedJobs });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ status: false, message: 'Internal Server Error' });
+    }
+};
+
+exports.applyJob = async (req, res) => {
+    try {
+
+        const newApplyJob = new ApplyJob({
+            position: req.body.title,
+            user_id: req.body.user_id,
+        });
+
+
+        await newApplyJob.save();
+
+        res.status(201).json({ message: 'Applied for Job Successfully', job: newApplyJob });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+};
+
+exports.getAllAppliedJobs = async (req, res) => {
+    try {
+
+        const applyJob = await ApplyJob.find().populate('company_id');
         const formattedJobs = jobs.map(job => {
 
             return {

@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useContext} from 'react';
 import { Box, Grid, Typography, Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Slide } from '@mui/material';
+import {UserContext} from "../UserContext/UserContext";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -7,13 +8,38 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 const JobCard = ({ id, postedOn, title, type, location, companyName, link, skills, experience, qualification,shift, description, ...jobDetails }) => {
     const [open, setOpen] = useState(false);
-
+    const { user, isLoading } = useContext(UserContext);
 
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
     const handleApply = () => {
-        window.open(link, '_blank'); // Open the application link in a new tab
+
+        if (!user) {
+            console.log("User is not logged in. Redirect or show a login modal.");
+            return;
+        }
+
+        const apiUrl = 'http://127.0.0.1:8080/api/apply-job';
+
+        fetch(apiUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                user_id: user.id,
+                title: title,
+            }),
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Job application submitted successfully:', data);
+            })
+            .catch(error => {
+                console.error('Error submitting job application:', error);
+
+            });
     };
 
     const dateObject = new Date(postedOn);
@@ -99,9 +125,11 @@ const JobCard = ({ id, postedOn, title, type, location, companyName, link, skill
               </DialogContentText>
           </DialogContent>
       <DialogActions>
+          {user && user.role === 'student' && (
           <Button color="primary" variant="contained" onClick={handleApply}>
                         Apply
           </Button>
+          )}
           <Button color="secondary" onClick={handleClose}>Close</Button>
       </DialogActions>
       </Dialog>
