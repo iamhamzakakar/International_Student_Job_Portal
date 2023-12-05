@@ -121,7 +121,7 @@ exports.searchJobs = async (req, res) => {
         }
 
 
-        const jobs = await Job.find(query);
+        const jobs = await Job.find(query).populate('company_id');
         const formattedJobs = jobs.map(job => {
             return {
                 id: job._id,
