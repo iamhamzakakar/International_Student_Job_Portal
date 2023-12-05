@@ -57,6 +57,8 @@ module.exports = function (app) {
         ],
         jobController.applyJob
     );
+
+    router.get('/api/jobs/search', jobController.searchJobs);
     // Use the router with the provided app instance
     app.use('/', router);
 };

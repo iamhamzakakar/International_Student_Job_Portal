@@ -156,11 +156,6 @@ const JobPost = ({ open, setOpen }) => {
         }, 3000);
     };
 
-    // Function to close Snackbar
-    const handleCloseSnackbar = () => {
-        setSnackbar({ open: false, message: '' });
-    };
-
     return(
         <>
         <Dialog open={open} fullWidth>
