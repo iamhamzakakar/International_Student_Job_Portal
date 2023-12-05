@@ -80,7 +80,13 @@ const StudentProfile = () => {
     const handleSubmit = async () => {
         try {
             await Promise.all([updateProfile(), uploadProfileImage(), uploadCvFile()]);
-            toast.success("Profile updated successfully");
+            window.location.reload();
+            toast.success("Profile updated successfully!", {
+                position: toast.POSITION.TOP_CENTER,
+                onClose: () => {
+
+                }
+            });
         } catch (error) {
             console.error('Error updating profile:', error);
             toast.error("Failed to update profile");

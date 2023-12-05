@@ -133,6 +133,7 @@ const JobPost = ({ open, setOpen }) => {
                     const data = await response.json();
                     toast.success('Job posted successfully!');
                     handleClose();
+                    window.location.reload();
                     if (data.message) {
                         handleClose();
                         toast.error(data.message || 'An error occurred');

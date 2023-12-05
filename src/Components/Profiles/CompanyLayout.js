@@ -61,6 +61,7 @@ const CompanyProfile = () => {
             toast.success("Company profile updated successfully!", {
                 position: toast.POSITION.TOP_CENTER,
                 onClose: () => {
+                    window.location.reload();
                 }
             });
         } catch (error) {
